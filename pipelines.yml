@@ -33,11 +33,11 @@ pipelines:
             - export JFROG_BUILD_STATUS=FAIL
             - jfrog rt bce
             - jfrog rt bp
-  - name: publishBuildInfoStep
-    type: PublishBuildInfo
-    configuration:
-      forceXrayScan: true
-      inputSteps:
-        - name: RobiNino_npm_example_pipelines_pipeline
-      outputResources:
-        - name: RobiNino_npm_example_pipelines_biResource
+      - name: publishBuildInfoStep
+        type: PublishBuildInfo
+        configuration:
+          forceXrayScan: true
+          inputSteps:
+            - name: RobiNino_npm_example_pipelines_pipeline
+          outputResources:
+            - name: RobiNino_npm_example_pipelines_biResource
