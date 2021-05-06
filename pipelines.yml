@@ -38,6 +38,6 @@ pipelines:
         configuration:
           forceXrayScan: true
           inputSteps:
-            - name: RobiNino_npm_example_pipelines_pipeline
+            - name: NpmBuild
           outputResources:
             - name: RobiNino_npm_example_pipelines_biResource
