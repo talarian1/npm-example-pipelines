@@ -42,6 +42,7 @@ pipelines:
       - jfrog rt npm-config --server-id-resolve RobiNino_npm_example_pipelines_serverId
         --repo-resolve global-npm
       - jfrog rt npmi
+      - jfrog rt npm-publish
       - jfrog rt bag
       - jfrog rt bce
       onComplete:
