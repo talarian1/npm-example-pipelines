@@ -8,6 +8,10 @@ resources:
       pullRequestCreate: true
     branches:
       include: main
+- name: RobiNino_npm_example_pipelines_biResource
+  type: BuildInfo
+  configuration:
+    sourceArtifactory: robindev
 pipelines:
 - name: RobiNino_npm_example_pipelines_pipeline
   configuration:
@@ -22,9 +26,11 @@ pipelines:
     type: Bash
     configuration:
       inputResources:
-      - name: RobiNino_npm_example_pipelines_gitResource
+        - name: RobiNino_npm_example_pipelines_gitResource
       integrations:
-      - name: robindev
+        - name: robindev
+      outputResources:
+        - name: RobiNino_npm_example_pipelines_biResource
     execution:
       onExecute:
       - cd $res_RobiNino_npm_example_pipelines_gitResource_resourcePath
@@ -41,10 +47,17 @@ pipelines:
       - jfrog rt npmi
       - jfrog rt bag
       - jfrog rt bce
-      - jfrog rt bp
       onComplete:
       - update_commit_status RobiNino_npm_example_pipelines_gitResource
       onFailure:
       - export JFROG_BUILD_RESULTS=FAIL
       - jfrog rt bce
       - jfrog rt bp
+  - name: publishBuildInfoStep
+    type: PublishBuildInfo
+    configuration:
+      forceXrayScan: true
+      inputSteps:
+        - name: Build
+      outputResources:
+        - name: RobiNino_npm_example_pipelines_biResource
