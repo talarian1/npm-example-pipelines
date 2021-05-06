@@ -29,7 +29,7 @@ pipelines:
       - jfrog -v
       - cd $res_RobiNino_npm_example_pipelines_gitResource_resourcePath
       - export CI=true
-      - export JFROG_CLI_BUILD_NAME=npm-example-pipelines-main
+      - export JFROG_CLI_BUILD_NAME=$pipeline_name
       - export JFROG_CLI_BUILD_NUMBER=$run_number
       - export JFROG_CLI_BUILD_URL=$step_url
       - export JFROG_BUILD_RESULTS=PASS
