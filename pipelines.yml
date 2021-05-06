@@ -40,7 +40,7 @@ pipelines:
         --user $int_robindev_user --apikey $int_robindev_apikey
         --enc-password=false
       - jfrog rt npm-config --server-id-resolve RobiNino_npm_example_pipelines_serverId
-        --repo-resolve global-npm
+        --repo-resolve global-npm --server-id-deploy RobiNino_npm_example_pipelines_serverId --repo-deploy global-npm
       - jfrog rt npmi
       - jfrog rt npm-publish
       - jfrog rt bag
