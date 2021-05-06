@@ -3,15 +3,15 @@ resources:
   type: GitRepo
   configuration:
     path: RobiNino/npm-example-pipelines
-    gitProvider: github_RobiNino_npm_example_pipelines_integration
+    gitProvider: github_robi
     buildOn:
       pullRequestCreate: true
     branches:
       include: main
-- name: npm_example_pipelines_pipeline_bi
+- name: RobiNino_npm_example_pipelines_biResource
   type: BuildInfo
   configuration:
-    sourceArtifactory:    rt_RobiNino_npm_example_pipelines_integration
+    sourceArtifactory: robindev
 pipelines:
   - name: RobiNino_npm_example_pipelines_pipeline
     steps:
@@ -25,11 +25,11 @@ pipelines:
           autoPublishBuildInfo: true
           forceXrayScan:        true
           integrations:
-            - name:         rt_RobiNino_npm_example_pipelines_integration
+            - name: robindev
           inputResources:
-            - name:         RobiNino_npm_example_pipelines_gitResource
+            - name: RobiNino_npm_example_pipelines_gitResource
           outputResources:
-            - name:         npm_example_pipelines_pipeline_bi
+            - name: RobiNino_npm_example_pipelines_biResource
         execution:
           onFailure:
             - export JFROG_BUILD_STATUS=FAIL
