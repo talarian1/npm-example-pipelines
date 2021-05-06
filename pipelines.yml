@@ -32,7 +32,7 @@ pipelines:
       - export JFROG_CLI_BUILD_NUMBER=$run_number
       - export JFROG_CLI_BUILD_URL=$step_url
       - export JFROG_BUILD_RESULTS=PASS
-      - jfrog rt c RobiNino_npm_example_pipelines_serverId --artifactory-url $int_robindev_url
+      - jfrog rt c RobiNino_npm_example_pipelines_serverId --url $int_robindev_url
         --user $int_robindev_user --apikey $int_robindev_apikey
         --enc-password=false
       - jfrog rt npm-config --server-id-resolve RobiNino_npm_example_pipelines_serverId
