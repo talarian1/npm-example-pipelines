@@ -8,13 +8,16 @@ resources:
       pullRequestCreate: true
     branches:
       include: main
-- name: RobiNino_npm_example_pipelines_biResource
-  type: BuildInfo
-  configuration:
-    sourceArtifactory: robindev
 pipelines:
-  - name: RobiNino_npm_example_pipelines_pipeline
-    steps:
+- name: RobiNino_npm_example_pipelines_pipeline
+  configuration:
+    runtime:
+      type: image
+      image:
+        custom:
+          name: releases-docker.jfrog.io/jfrog/jfrog-cli-full
+          tag: latest
+  steps:
   - name: Build
     type: Bash
     configuration:
@@ -26,7 +29,7 @@ pipelines:
       onExecute:
       - cd $res_RobiNino_npm_example_pipelines_gitResource_resourcePath
       - export CI=true
-      - export JFROG_CLI_BUILD_NAME=$pipeline_name
+      - export JFROG_CLI_BUILD_NAME=npm-example-pipelines-main
       - export JFROG_CLI_BUILD_NUMBER=$run_number
       - export JFROG_CLI_BUILD_URL=$step_url
       - export JFROG_BUILD_RESULTS=PASS
@@ -39,11 +42,9 @@ pipelines:
       - jfrog rt bag
       - jfrog rt bce
       - jfrog rt bp
-      - name: publishBuildInfoStep
-        type: PublishBuildInfo
-        configuration:
-          forceXrayScan: true
-          inputSteps:
-            - name: Build
-          outputResources:
-            - name: RobiNino_npm_example_pipelines_biResource
+      onComplete:
+      - update_commit_status RobiNino_npm_example_pipelines_gitResource
+      onFailure:
+      - export JFROG_BUILD_RESULTS=FAIL
+      - jfrog rt bce
+      - jfrog rt bp
