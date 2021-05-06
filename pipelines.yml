@@ -15,29 +15,35 @@ resources:
 pipelines:
   - name: RobiNino_npm_example_pipelines_pipeline
     steps:
-      - name: NpmBuild
-        type: NpmBuild
-        configuration:
-          environmentVariables:
-            'JFROG_CLI_BUILD_URL': $step_url
-            'JFROG_BUILD_STATUS': 'PASS'
-          resolverRepo: global-npm
-          integrations:
-            - name: robindev
-          inputResources:
-            - name: RobiNino_npm_example_pipelines_gitResource
-          outputResources:
-            - name: RobiNino_npm_example_pipelines_biResource
-        execution:
-          onFailure:
-            - export JFROG_BUILD_STATUS=FAIL
-            - jfrog rt bce
-            - jfrog rt bp
+  - name: Build
+    type: Bash
+    configuration:
+      inputResources:
+      - name: RobiNino_npm_example_pipelines_gitResource
+      integrations:
+      - name: robindev
+    execution:
+      onExecute:
+      - cd $res_RobiNino_npm_example_pipelines_gitResource_resourcePath
+      - export CI=true
+      - export JFROG_CLI_BUILD_NAME=$pipeline_name
+      - export JFROG_CLI_BUILD_NUMBER=$run_number
+      - export JFROG_CLI_BUILD_URL=$step_url
+      - export JFROG_BUILD_RESULTS=PASS
+      - jfrog c add RobiNino_npm_example_pipelines_serverId --artifactory-url $int_robindev_url
+        --user $int_robindev_user --apikey $int_robindev_apikey
+        --enc-password=false
+      - jfrog rt npm-config --server-id-resolve RobiNino_npm_example_pipelines_serverId
+        --repo-resolve global-npm
+      - jfrog rt npmi
+      - jfrog rt bag
+      - jfrog rt bce
+      - jfrog rt bp
       - name: publishBuildInfoStep
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
           inputSteps:
-            - name: NpmBuild
+            - name: Build
           outputResources:
             - name: RobiNino_npm_example_pipelines_biResource
