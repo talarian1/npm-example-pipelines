@@ -22,8 +22,8 @@ pipelines:
             'JFROG_CLI_BUILD_URL': $step_url
             'JFROG_BUILD_STATUS': 'PASS'
           resolverRepo: global-npm
-          autoPublishBuildInfo: true
-          forceXrayScan:        true
+      #    autoPublishBuildInfo: true
+       #   forceXrayScan:        true
           integrations:
             - name: robindev
           inputResources:
