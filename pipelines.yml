@@ -26,6 +26,7 @@ pipelines:
         - name: RobiNino_npm_example_pipelines_biResource
     execution:
       onExecute:
+      - jfrog -v
       - cd $res_RobiNino_npm_example_pipelines_gitResource_resourcePath
       - export CI=true
       - export JFROG_CLI_BUILD_NAME=npm-example-pipelines-main
