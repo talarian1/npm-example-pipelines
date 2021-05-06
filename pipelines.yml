@@ -25,7 +25,7 @@ pipelines:
           autoPublishBuildInfo: true
           forceXrayScan:        true
           integrations:
-            - name:         rt_mvn_example_pipelines_integration
+            - name:         rt_RobiNino_npm_example_pipelines_integration
           inputResources:
             - name:         RobiNino_npm_example_pipelines_gitResource
           outputResources:
