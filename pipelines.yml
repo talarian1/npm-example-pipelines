@@ -14,13 +14,6 @@ resources:
     sourceArtifactory: robindev
 pipelines:
 - name: RobiNino_npm_example_pipelines_pipeline
-  configuration:
-    runtime:
-      type: image
-      image:
-        custom:
-          name: releases-docker.jfrog.io/jfrog/jfrog-cli-full
-          tag: latest
   steps:
   - name: Build
     type: Bash
