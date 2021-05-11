@@ -28,7 +28,7 @@ pipelines:
         - name: RobiNino_npm_example_pipelines_biResource
     execution:
       onExecute:
-      - jfrog -v
+      - /var/opt/jfrog/pipelines/jfrog/jfrog -v
       - cd $res_RobiNino_npm_example_pipelines_gitResource_resourcePath
       - export CI=true
       - export JFROG_CLI_BUILD_NAME=$pipeline_name
@@ -36,21 +36,21 @@ pipelines:
       - export JFROG_CLI_BUILD_URL=$step_url
       - export JFROG_BUILD_RESULTS=PASS
       - export JFROG_CLI_LOG_LEVEL=DEBUG
-      - jfrog rt c RobiNino_npm_example_pipelines_serverId --url $int_robindev_url
+      - /var/opt/jfrog/pipelines/jfrog/jfrog rt c RobiNino_npm_example_pipelines_serverId --url $int_robindev_url
         --user $int_robindev_user --apikey $int_robindev_apikey
         --enc-password=false
-      - jfrog rt npm-config --server-id-resolve RobiNino_npm_example_pipelines_serverId
+      - /var/opt/jfrog/pipelines/jfrog/jfrog rt npm-config --server-id-resolve RobiNino_npm_example_pipelines_serverId
         --repo-resolve global-npm --server-id-deploy RobiNino_npm_example_pipelines_serverId --repo-deploy global-npm
-      - jfrog rt npmi
-      - jfrog rt npm-publish
-      - jfrog rt bag
-      - jfrog rt bce
+      - /var/opt/jfrog/pipelines/jfrog/jfrog rt npmi
+      - /var/opt/jfrog/pipelines/jfrog/jfrog rt npm-publish
+      - /var/opt/jfrog/pipelines/jfrog/jfrog rt bag
+      - /var/opt/jfrog/pipelines/jfrog/jfrog rt bce
       onComplete:
       - update_commit_status RobiNino_npm_example_pipelines_gitResource
       onFailure:
       - export JFROG_BUILD_RESULTS=FAIL
-      - jfrog rt bce
-      - jfrog rt bp
+      - /var/opt/jfrog/pipelines/jfrog/jfrog rt bce
+      - /var/opt/jfrog/pipelines/jfrog/jfrog rt bp
   - name: publishBuildInfoStep
     type: PublishBuildInfo
     configuration:
